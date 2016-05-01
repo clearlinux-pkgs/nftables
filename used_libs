@@ -3,3 +3,4 @@ libgmp.so.10
 libmnl.so.0
 libnftnl.so.4
 libreadline.so.6
+libtinfow.so.6

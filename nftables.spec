@@ -4,7 +4,7 @@
 #
 Name     : nftables
 Version  : 0.5
-Release  : 5
+Release  : 6
 URL      : http://netfilter.org/projects/nftables/files/nftables-0.5.tar.bz2
 Source0  : http://netfilter.org/projects/nftables/files/nftables-0.5.tar.bz2
 Summary  : No detailed summary available
@@ -14,6 +14,7 @@ Requires: nftables-bin
 BuildRequires : bison
 BuildRequires : flex
 BuildRequires : gmp-dev
+BuildRequires : ncurses-dev
 BuildRequires : pkgconfig(libmnl)
 BuildRequires : pkgconfig(libnftnl)
 BuildRequires : readline-dev
