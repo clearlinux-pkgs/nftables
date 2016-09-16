@@ -4,7 +4,7 @@
 #
 Name     : nftables
 Version  : 0.5
-Release  : 7
+Release  : 8
 URL      : http://netfilter.org/projects/nftables/files/nftables-0.5.tar.bz2
 Source0  : http://netfilter.org/projects/nftables/files/nftables-0.5.tar.bz2
 Summary  : No detailed summary available
