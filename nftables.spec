@@ -5,11 +5,11 @@
 # Source0 file verified with key 0xAB4655A126D292E4 (coreteam@netfilter.org)
 #
 Name     : nftables
-Version  : 0.7
-Release  : 12
-URL      : http://netfilter.org/projects/nftables/files/nftables-0.7.tar.bz2
-Source0  : http://netfilter.org/projects/nftables/files/nftables-0.7.tar.bz2
-Source99 : http://netfilter.org/projects/nftables/files/nftables-0.7.tar.bz2.sig
+Version  : 0.8
+Release  : 13
+URL      : http://netfilter.org/projects/nftables/files/nftables-0.8.tar.bz2
+Source0  : http://netfilter.org/projects/nftables/files/nftables-0.8.tar.bz2
+Source99 : http://netfilter.org/projects/nftables/files/nftables-0.8.tar.bz2.sig
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : GPL-2.0
@@ -37,16 +37,16 @@ bin components for the nftables package.
 
 
 %prep
-%setup -q -n nftables-0.7
+%setup -q -n nftables-0.8
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1495717662
+export SOURCE_DATE_EPOCH=1511140897
 %configure --disable-static
-make V=1  %{?_smp_mflags}
+make  %{?_smp_mflags}
 
 %check
 export LANG=C
@@ -56,7 +56,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1495717662
+export SOURCE_DATE_EPOCH=1511140897
 rm -rf %{buildroot}
 %make_install
 
