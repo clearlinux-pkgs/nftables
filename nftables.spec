@@ -6,7 +6,7 @@
 #
 Name     : nftables
 Version  : 0.8
-Release  : 13
+Release  : 14
 URL      : http://netfilter.org/projects/nftables/files/nftables-0.8.tar.bz2
 Source0  : http://netfilter.org/projects/nftables/files/nftables-0.8.tar.bz2
 Source99 : http://netfilter.org/projects/nftables/files/nftables-0.8.tar.bz2.sig
