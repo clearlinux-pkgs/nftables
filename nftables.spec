@@ -5,16 +5,19 @@
 # Source0 file verified with key 0xAB4655A126D292E4 (coreteam@netfilter.org)
 #
 Name     : nftables
-Version  : 0.8
-Release  : 15
-URL      : http://netfilter.org/projects/nftables/files/nftables-0.8.tar.bz2
-Source0  : http://netfilter.org/projects/nftables/files/nftables-0.8.tar.bz2
-Source99 : http://netfilter.org/projects/nftables/files/nftables-0.8.tar.bz2.sig
-Summary  : No detailed summary available
+Version  : 0.9.0
+Release  : 16
+URL      : http://netfilter.org/projects/nftables/files/nftables-0.9.0.tar.bz2
+Source0  : http://netfilter.org/projects/nftables/files/nftables-0.9.0.tar.bz2
+Source99 : http://netfilter.org/projects/nftables/files/nftables-0.9.0.tar.bz2.sig
+Summary  : Netfilter nf_tables user library
 Group    : Development/Tools
 License  : GPL-2.0
 Requires: nftables-bin
+Requires: nftables-lib
+Requires: nftables-license
 BuildRequires : bison
+BuildRequires : docbook-utils
 BuildRequires : flex
 BuildRequires : gmp-dev
 BuildRequires : ncurses-dev
@@ -25,27 +28,58 @@ BuildRequires : readline-dev
 BuildRequires : sed
 
 %description
-This test-suite is intended to perform tests of higher level than
-the other reggresion test-suite.
+Author: Ana Rey <anarey@gmail.com>
+Date: 18/Sept/2014
+Here, the automated regression testing for nftables and some test
+files.
 
 %package bin
 Summary: bin components for the nftables package.
 Group: Binaries
+Requires: nftables-license
 
 %description bin
 bin components for the nftables package.
 
 
+%package dev
+Summary: dev components for the nftables package.
+Group: Development
+Requires: nftables-lib
+Requires: nftables-bin
+Provides: nftables-devel
+
+%description dev
+dev components for the nftables package.
+
+
+%package lib
+Summary: lib components for the nftables package.
+Group: Libraries
+Requires: nftables-license
+
+%description lib
+lib components for the nftables package.
+
+
+%package license
+Summary: license components for the nftables package.
+Group: Default
+
+%description license
+license components for the nftables package.
+
+
 %prep
-%setup -q -n nftables-0.8
+%setup -q -n nftables-0.9.0
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1511140897
-%configure --disable-static
+export SOURCE_DATE_EPOCH=1533849448
+%configure --disable-static --disable-man-doc
 make  %{?_smp_mflags}
 
 %check
@@ -56,8 +90,10 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1511140897
+export SOURCE_DATE_EPOCH=1533849448
 rm -rf %{buildroot}
+mkdir -p %{buildroot}/usr/share/doc/nftables
+cp COPYING %{buildroot}/usr/share/doc/nftables/COPYING
 %make_install
 
 %files
@@ -66,3 +102,18 @@ rm -rf %{buildroot}
 %files bin
 %defattr(-,root,root,-)
 /usr/bin/nft
+
+%files dev
+%defattr(-,root,root,-)
+/usr/include/nftables/libnftables.h
+/usr/lib64/libnftables.so
+/usr/lib64/pkgconfig/libnftables.pc
+
+%files lib
+%defattr(-,root,root,-)
+/usr/lib64/libnftables.so.0
+/usr/lib64/libnftables.so.0.0.0
+
+%files license
+%defattr(-,root,root,-)
+/usr/share/doc/nftables/COPYING
