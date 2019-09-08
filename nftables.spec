@@ -5,18 +5,21 @@
 # Source0 file verified with key 0xAB4655A126D292E4 (coreteam@netfilter.org)
 #
 Name     : nftables
-Version  : 0.9.0
-Release  : 18
-URL      : http://netfilter.org/projects/nftables/files/nftables-0.9.0.tar.bz2
-Source0  : http://netfilter.org/projects/nftables/files/nftables-0.9.0.tar.bz2
-Source99 : http://netfilter.org/projects/nftables/files/nftables-0.9.0.tar.bz2.sig
-Summary  : Netfilter nf_tables user library
+Version  : 0.9.2
+Release  : 19
+URL      : http://netfilter.org/projects/nftables/files/nftables-0.9.2.tar.bz2
+Source0  : http://netfilter.org/projects/nftables/files/nftables-0.9.2.tar.bz2
+Source1 : http://netfilter.org/projects/nftables/files/nftables-0.9.2.tar.bz2.sig
+Summary  : Netfilter tables userspace tools
 Group    : Development/Tools
 License  : GPL-2.0
-Requires: nftables-bin
-Requires: nftables-lib
-Requires: nftables-license
+Requires: nftables-bin = %{version}-%{release}
+Requires: nftables-lib = %{version}-%{release}
+Requires: nftables-license = %{version}-%{release}
+Requires: nftables-python = %{version}-%{release}
+Requires: nftables-python3 = %{version}-%{release}
 BuildRequires : bison
+BuildRequires : buildreq-distutils3
 BuildRequires : docbook-utils
 BuildRequires : flex
 BuildRequires : gmp-dev
@@ -28,15 +31,12 @@ BuildRequires : readline-dev
 BuildRequires : sed
 
 %description
-Author: Ana Rey <anarey@gmail.com>
-Date: 18/Sept/2014
-Here, the automated regression testing for nftables and some test
-files.
+No detailed description available
 
 %package bin
 Summary: bin components for the nftables package.
 Group: Binaries
-Requires: nftables-license
+Requires: nftables-license = %{version}-%{release}
 
 %description bin
 bin components for the nftables package.
@@ -45,9 +45,11 @@ bin components for the nftables package.
 %package dev
 Summary: dev components for the nftables package.
 Group: Development
-Requires: nftables-lib
-Requires: nftables-bin
-Provides: nftables-devel
+Requires: nftables-lib = %{version}-%{release}
+Requires: nftables-bin = %{version}-%{release}
+Provides: nftables-devel = %{version}-%{release}
+Requires: nftables = %{version}-%{release}
+Requires: nftables = %{version}-%{release}
 
 %description dev
 dev components for the nftables package.
@@ -56,7 +58,7 @@ dev components for the nftables package.
 %package lib
 Summary: lib components for the nftables package.
 Group: Libraries
-Requires: nftables-license
+Requires: nftables-license = %{version}-%{release}
 
 %description lib
 lib components for the nftables package.
@@ -70,30 +72,57 @@ Group: Default
 license components for the nftables package.
 
 
+%package python
+Summary: python components for the nftables package.
+Group: Default
+Requires: nftables-python3 = %{version}-%{release}
+
+%description python
+python components for the nftables package.
+
+
+%package python3
+Summary: python3 components for the nftables package.
+Group: Default
+Requires: python3-core
+
+%description python3
+python3 components for the nftables package.
+
+
 %prep
-%setup -q -n nftables-0.9.0
+%setup -q -n nftables-0.9.2
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1533849448
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1567968309
+# -Werror is for werrorists
+export GCC_IGNORE_WERROR=1
+export AR=gcc-ar
+export RANLIB=gcc-ranlib
+export NM=gcc-nm
+export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FCFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
 %configure --disable-static --disable-man-doc
 make  %{?_smp_mflags}
 
 %check
-export LANG=C
+export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1533849448
+export SOURCE_DATE_EPOCH=1567968309
 rm -rf %{buildroot}
-mkdir -p %{buildroot}/usr/share/doc/nftables
-cp COPYING %{buildroot}/usr/share/doc/nftables/COPYING
+mkdir -p %{buildroot}/usr/share/package-licenses/nftables
+cp COPYING %{buildroot}/usr/share/package-licenses/nftables/COPYING
 %make_install
 
 %files
@@ -111,9 +140,16 @@ cp COPYING %{buildroot}/usr/share/doc/nftables/COPYING
 
 %files lib
 %defattr(-,root,root,-)
-/usr/lib64/libnftables.so.0
-/usr/lib64/libnftables.so.0.0.0
+/usr/lib64/libnftables.so.1
+/usr/lib64/libnftables.so.1.0.0
 
 %files license
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/nftables/COPYING
+
+%files python
 %defattr(-,root,root,-)
-/usr/share/doc/nftables/COPYING
+
+%files python3
+%defattr(-,root,root,-)
+/usr/lib/python3*/*

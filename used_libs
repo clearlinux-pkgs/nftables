@@ -1,5 +1,6 @@
 libc.so.6
 libgmp.so.10
 libmnl.so.0
-libnftnl.so.7
+libnftnl.so.11
 libreadline.so.7
+libtinfow.so.6
