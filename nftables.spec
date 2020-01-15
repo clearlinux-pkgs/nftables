@@ -5,11 +5,11 @@
 # Source0 file verified with key 0xAB4655A126D292E4 (coreteam@netfilter.org)
 #
 Name     : nftables
-Version  : 0.9.2
-Release  : 21
-URL      : http://netfilter.org/projects/nftables/files/nftables-0.9.2.tar.bz2
-Source0  : http://netfilter.org/projects/nftables/files/nftables-0.9.2.tar.bz2
-Source1 : http://netfilter.org/projects/nftables/files/nftables-0.9.2.tar.bz2.sig
+Version  : 0.9.3
+Release  : 22
+URL      : http://netfilter.org/projects/nftables/files/nftables-0.9.3.tar.bz2
+Source0  : http://netfilter.org/projects/nftables/files/nftables-0.9.3.tar.bz2
+Source1  : http://netfilter.org/projects/nftables/files/nftables-0.9.3.tar.bz2.sig
 Summary  : Netfilter tables userspace tools
 Group    : Development/Tools
 License  : GPL-2.0
@@ -23,6 +23,7 @@ BuildRequires : buildreq-distutils3
 BuildRequires : docbook-utils
 BuildRequires : flex
 BuildRequires : gmp-dev
+BuildRequires : jansson-dev
 BuildRequires : ncurses-dev
 BuildRequires : pkgconfig(libmnl)
 BuildRequires : pkgconfig(libnftnl)
@@ -53,6 +54,14 @@ Requires: nftables = %{version}-%{release}
 
 %description dev
 dev components for the nftables package.
+
+
+%package doc
+Summary: doc components for the nftables package.
+Group: Documentation
+
+%description doc
+doc components for the nftables package.
 
 
 %package lib
@@ -91,14 +100,15 @@ python3 components for the nftables package.
 
 
 %prep
-%setup -q -n nftables-0.9.2
+%setup -q -n nftables-0.9.3
+cd %{_builddir}/nftables-0.9.3
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1567968309
+export SOURCE_DATE_EPOCH=1579131365
 # -Werror is for werrorists
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
@@ -108,7 +118,9 @@ export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
 export FCFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
 export FFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
 export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
-%configure --disable-static --disable-man-doc
+%configure --disable-static --disable-man-doc \
+--with-xtables \
+--with-json
 make  %{?_smp_mflags}
 
 %check
@@ -119,10 +131,10 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1567968309
+export SOURCE_DATE_EPOCH=1579131365
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/nftables
-cp COPYING %{buildroot}/usr/share/package-licenses/nftables/COPYING
+cp %{_builddir}/nftables-0.9.3/COPYING %{buildroot}/usr/share/package-licenses/nftables/18fa48a7ed581b147776213368ae1aafd82509c2
 %make_install
 
 %files
@@ -138,6 +150,10 @@ cp COPYING %{buildroot}/usr/share/package-licenses/nftables/COPYING
 /usr/lib64/libnftables.so
 /usr/lib64/pkgconfig/libnftables.pc
 
+%files doc
+%defattr(0644,root,root,0755)
+%doc /usr/share/doc/nftables/*
+
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/libnftables.so.1
@@ -145,7 +161,7 @@ cp COPYING %{buildroot}/usr/share/package-licenses/nftables/COPYING
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/nftables/COPYING
+/usr/share/package-licenses/nftables/18fa48a7ed581b147776213368ae1aafd82509c2
 
 %files python
 %defattr(-,root,root,-)
