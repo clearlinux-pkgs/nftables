@@ -6,7 +6,7 @@
 #
 Name     : nftables
 Version  : 0.9.3
-Release  : 23
+Release  : 24
 URL      : http://netfilter.org/projects/nftables/files/nftables-0.9.3.tar.bz2
 Source0  : http://netfilter.org/projects/nftables/files/nftables-0.9.3.tar.bz2
 Source1  : http://netfilter.org/projects/nftables/files/nftables-0.9.3.tar.bz2.sig
