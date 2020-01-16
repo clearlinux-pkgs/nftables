@@ -6,7 +6,7 @@
 #
 Name     : nftables
 Version  : 0.9.3
-Release  : 22
+Release  : 23
 URL      : http://netfilter.org/projects/nftables/files/nftables-0.9.3.tar.bz2
 Source0  : http://netfilter.org/projects/nftables/files/nftables-0.9.3.tar.bz2
 Source1  : http://netfilter.org/projects/nftables/files/nftables-0.9.3.tar.bz2.sig
@@ -108,7 +108,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1579131365
+export SOURCE_DATE_EPOCH=1579187761
 # -Werror is for werrorists
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
@@ -131,7 +131,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1579131365
+export SOURCE_DATE_EPOCH=1579187761
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/nftables
 cp %{_builddir}/nftables-0.9.3/COPYING %{buildroot}/usr/share/package-licenses/nftables/18fa48a7ed581b147776213368ae1aafd82509c2
