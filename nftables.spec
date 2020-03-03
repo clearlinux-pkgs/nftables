@@ -6,18 +6,20 @@
 #
 Name     : nftables
 Version  : 0.9.3
-Release  : 26
+Release  : 29
 URL      : http://netfilter.org/projects/nftables/files/nftables-0.9.3.tar.bz2
 Source0  : http://netfilter.org/projects/nftables/files/nftables-0.9.3.tar.bz2
 Source1  : http://netfilter.org/projects/nftables/files/nftables-0.9.3.tar.bz2.sig
-Summary  : Netfilter tables userspace tools
+Summary  : Netfilter nf_tables user library
 Group    : Development/Tools
 License  : GPL-2.0
 Requires: nftables-bin = %{version}-%{release}
 Requires: nftables-lib = %{version}-%{release}
 Requires: nftables-license = %{version}-%{release}
+Requires: nftables-man = %{version}-%{release}
 Requires: nftables-python = %{version}-%{release}
 Requires: nftables-python3 = %{version}-%{release}
+BuildRequires : asciidoc
 BuildRequires : bison
 BuildRequires : buildreq-distutils3
 BuildRequires : docbook-utils
@@ -50,7 +52,6 @@ Requires: nftables-lib = %{version}-%{release}
 Requires: nftables-bin = %{version}-%{release}
 Provides: nftables-devel = %{version}-%{release}
 Requires: nftables = %{version}-%{release}
-Requires: nftables = %{version}-%{release}
 
 %description dev
 dev components for the nftables package.
@@ -59,6 +60,7 @@ dev components for the nftables package.
 %package doc
 Summary: doc components for the nftables package.
 Group: Documentation
+Requires: nftables-man = %{version}-%{release}
 
 %description doc
 doc components for the nftables package.
@@ -79,6 +81,14 @@ Group: Default
 
 %description license
 license components for the nftables package.
+
+
+%package man
+Summary: man components for the nftables package.
+Group: Default
+
+%description man
+man components for the nftables package.
 
 
 %package python
@@ -108,8 +118,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1583186751
-# -Werror is for werrorists
+export SOURCE_DATE_EPOCH=1583262891
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -118,8 +127,7 @@ export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
 export FCFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
 export FFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
 export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
-%configure --disable-static --disable-man-doc \
---with-xtables \
+%configure --disable-static --with-xtables \
 --with-json
 make  %{?_smp_mflags}
 
@@ -131,11 +139,14 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1583186751
+export SOURCE_DATE_EPOCH=1583262891
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/nftables
 cp %{_builddir}/nftables-0.9.3/COPYING %{buildroot}/usr/share/package-licenses/nftables/18fa48a7ed581b147776213368ae1aafd82509c2
 %make_install
+## install_append content
+make -C doc install DESTDIR=%{buildroot}
+## install_append end
 
 %files
 %defattr(-,root,root,-)
@@ -149,6 +160,7 @@ cp %{_builddir}/nftables-0.9.3/COPYING %{buildroot}/usr/share/package-licenses/n
 /usr/include/nftables/libnftables.h
 /usr/lib64/libnftables.so
 /usr/lib64/pkgconfig/libnftables.pc
+/usr/share/man/man3/libnftables.3
 
 %files doc
 %defattr(0644,root,root,0755)
@@ -162,6 +174,11 @@ cp %{_builddir}/nftables-0.9.3/COPYING %{buildroot}/usr/share/package-licenses/n
 %files license
 %defattr(0644,root,root,0755)
 /usr/share/package-licenses/nftables/18fa48a7ed581b147776213368ae1aafd82509c2
+
+%files man
+%defattr(0644,root,root,0755)
+/usr/share/man/man5/libnftables-json.5
+/usr/share/man/man8/nft.8
 
 %files python
 %defattr(-,root,root,-)

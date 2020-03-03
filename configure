@@ -1,4 +1,2 @@
---disable-man-doc
 --with-xtables
 --with-json
-
