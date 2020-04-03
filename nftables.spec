@@ -5,12 +5,12 @@
 # Source0 file verified with key 0xAB4655A126D292E4 (coreteam@netfilter.org)
 #
 Name     : nftables
-Version  : 0.9.3
-Release  : 29
-URL      : http://netfilter.org/projects/nftables/files/nftables-0.9.3.tar.bz2
-Source0  : http://netfilter.org/projects/nftables/files/nftables-0.9.3.tar.bz2
-Source1  : http://netfilter.org/projects/nftables/files/nftables-0.9.3.tar.bz2.sig
-Summary  : Netfilter nf_tables user library
+Version  : 0.9.4
+Release  : 30
+URL      : http://netfilter.org/projects/nftables/files/nftables-0.9.4.tar.bz2
+Source0  : http://netfilter.org/projects/nftables/files/nftables-0.9.4.tar.bz2
+Source1  : http://netfilter.org/projects/nftables/files/nftables-0.9.4.tar.bz2.sig
+Summary  : Netfilter tables userspace tools
 Group    : Development/Tools
 License  : GPL-2.0
 Requires: nftables-bin = %{version}-%{release}
@@ -51,6 +51,7 @@ Group: Development
 Requires: nftables-lib = %{version}-%{release}
 Requires: nftables-bin = %{version}-%{release}
 Provides: nftables-devel = %{version}-%{release}
+Requires: nftables = %{version}-%{release}
 Requires: nftables = %{version}-%{release}
 
 %description dev
@@ -110,15 +111,16 @@ python3 components for the nftables package.
 
 
 %prep
-%setup -q -n nftables-0.9.3
-cd %{_builddir}/nftables-0.9.3
+%setup -q -n nftables-0.9.4
+cd %{_builddir}/nftables-0.9.4
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1583262891
+export SOURCE_DATE_EPOCH=1585932668
+# -Werror is for werrorists
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -139,10 +141,10 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1583262891
+export SOURCE_DATE_EPOCH=1585932668
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/nftables
-cp %{_builddir}/nftables-0.9.3/COPYING %{buildroot}/usr/share/package-licenses/nftables/18fa48a7ed581b147776213368ae1aafd82509c2
+cp %{_builddir}/nftables-0.9.4/COPYING %{buildroot}/usr/share/package-licenses/nftables/18fa48a7ed581b147776213368ae1aafd82509c2
 %make_install
 ## install_append content
 make -C doc install DESTDIR=%{buildroot}
