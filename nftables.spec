@@ -5,11 +5,11 @@
 # Source0 file verified with key 0xAB4655A126D292E4 (coreteam@netfilter.org)
 #
 Name     : nftables
-Version  : 0.9.5
-Release  : 31
-URL      : http://netfilter.org/projects/nftables/files/nftables-0.9.5.tar.bz2
-Source0  : http://netfilter.org/projects/nftables/files/nftables-0.9.5.tar.bz2
-Source1  : http://netfilter.org/projects/nftables/files/nftables-0.9.5.tar.bz2.sig
+Version  : 0.9.6
+Release  : 32
+URL      : http://netfilter.org/projects/nftables/files/nftables-0.9.6.tar.bz2
+Source0  : http://netfilter.org/projects/nftables/files/nftables-0.9.6.tar.bz2
+Source1  : http://netfilter.org/projects/nftables/files/nftables-0.9.6.tar.bz2.sig
 Summary  : Netfilter nf_tables user library
 Group    : Development/Tools
 License  : GPL-2.0
@@ -110,15 +110,15 @@ python3 components for the nftables package.
 
 
 %prep
-%setup -q -n nftables-0.9.5
-cd %{_builddir}/nftables-0.9.5
+%setup -q -n nftables-0.9.6
+cd %{_builddir}/nftables-0.9.6
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1591634026
+export SOURCE_DATE_EPOCH=1592409954
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -139,10 +139,10 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1591634026
+export SOURCE_DATE_EPOCH=1592409954
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/nftables
-cp %{_builddir}/nftables-0.9.5/COPYING %{buildroot}/usr/share/package-licenses/nftables/18fa48a7ed581b147776213368ae1aafd82509c2
+cp %{_builddir}/nftables-0.9.6/COPYING %{buildroot}/usr/share/package-licenses/nftables/18fa48a7ed581b147776213368ae1aafd82509c2
 %make_install
 ## install_append content
 make -C doc install DESTDIR=%{buildroot}
