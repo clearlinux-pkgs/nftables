@@ -7,9 +7,9 @@
 Name     : nftables
 Version  : 0.9.6
 Release  : 32
-URL      : http://netfilter.org/projects/nftables/files/nftables-0.9.6.tar.bz2
-Source0  : http://netfilter.org/projects/nftables/files/nftables-0.9.6.tar.bz2
-Source1  : http://netfilter.org/projects/nftables/files/nftables-0.9.6.tar.bz2.sig
+URL      : https://www.netfilter.org/pub/nftables/nftables-0.9.6.tar.bz2
+Source0  : https://www.netfilter.org/pub/nftables/nftables-0.9.6.tar.bz2
+Source1  : https://www.netfilter.org/pub/nftables/nftables-0.9.6.tar.bz2.sig
 Summary  : Netfilter nf_tables user library
 Group    : Development/Tools
 License  : GPL-2.0
