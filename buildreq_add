@@ -1,5 +1,10 @@
 # This file contains additional build requirements that did not get
 # picked up automatically. One name per line, no whitespace.
-ncurses-dev
-docbook-utils
 asciidoc
+bison
+docbook-utils
+flex
+gmp-dev
+jansson-dev
+ncurses-dev
+readline-dev
