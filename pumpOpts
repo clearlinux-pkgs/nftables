@@ -1,1 +1,1 @@
-devel_version = 99
+regex_ban = ^0\.(099|100)$
