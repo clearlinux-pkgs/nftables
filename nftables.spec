@@ -6,7 +6,7 @@
 #
 Name     : nftables
 Version  : 0.9.7
-Release  : 34
+Release  : 35
 URL      : https://www.netfilter.org/pub/nftables/nftables-0.9.7.tar.bz2
 Source0  : https://www.netfilter.org/pub/nftables/nftables-0.9.7.tar.bz2
 Source1  : https://www.netfilter.org/pub/nftables/nftables-0.9.7.tar.bz2.sig
