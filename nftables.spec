@@ -5,15 +5,16 @@
 # Source0 file verified with key 0xD55D978A8A1420E4 (coreteam@netfilter.org)
 #
 Name     : nftables
-Version  : 0.9.8
-Release  : 39
-URL      : https://www.netfilter.org/pub/nftables/nftables-0.9.8.tar.bz2
-Source0  : https://www.netfilter.org/pub/nftables/nftables-0.9.8.tar.bz2
-Source1  : https://www.netfilter.org/pub/nftables/nftables-0.9.8.tar.bz2.sig
+Version  : 0.9.9
+Release  : 40
+URL      : https://www.netfilter.org/pub/nftables/nftables-0.9.9.tar.bz2
+Source0  : https://www.netfilter.org/pub/nftables/nftables-0.9.9.tar.bz2
+Source1  : https://www.netfilter.org/pub/nftables/nftables-0.9.9.tar.bz2.sig
 Summary  : Netfilter nf_tables user library
 Group    : Development/Tools
 License  : GPL-2.0
 Requires: nftables-bin = %{version}-%{release}
+Requires: nftables-data = %{version}-%{release}
 Requires: nftables-lib = %{version}-%{release}
 Requires: nftables-license = %{version}-%{release}
 Requires: nftables-man = %{version}-%{release}
@@ -39,10 +40,19 @@ No detailed description available
 %package bin
 Summary: bin components for the nftables package.
 Group: Binaries
+Requires: nftables-data = %{version}-%{release}
 Requires: nftables-license = %{version}-%{release}
 
 %description bin
 bin components for the nftables package.
+
+
+%package data
+Summary: data components for the nftables package.
+Group: Data
+
+%description data
+data components for the nftables package.
 
 
 %package dev
@@ -50,6 +60,7 @@ Summary: dev components for the nftables package.
 Group: Development
 Requires: nftables-lib = %{version}-%{release}
 Requires: nftables-bin = %{version}-%{release}
+Requires: nftables-data = %{version}-%{release}
 Provides: nftables-devel = %{version}-%{release}
 Requires: nftables = %{version}-%{release}
 
@@ -69,6 +80,7 @@ doc components for the nftables package.
 %package lib
 Summary: lib components for the nftables package.
 Group: Libraries
+Requires: nftables-data = %{version}-%{release}
 Requires: nftables-license = %{version}-%{release}
 
 %description lib
@@ -110,15 +122,15 @@ python3 components for the nftables package.
 
 
 %prep
-%setup -q -n nftables-0.9.8
-cd %{_builddir}/nftables-0.9.8
+%setup -q -n nftables-0.9.9
+cd %{_builddir}/nftables-0.9.9
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1610997616
+export SOURCE_DATE_EPOCH=1621987129
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -139,10 +151,10 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1610997616
+export SOURCE_DATE_EPOCH=1621987129
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/nftables
-cp %{_builddir}/nftables-0.9.8/COPYING %{buildroot}/usr/share/package-licenses/nftables/18fa48a7ed581b147776213368ae1aafd82509c2
+cp %{_builddir}/nftables-0.9.9/COPYING %{buildroot}/usr/share/package-licenses/nftables/18fa48a7ed581b147776213368ae1aafd82509c2
 %make_install
 ## install_append content
 make -C doc install DESTDIR=%{buildroot}
@@ -154,6 +166,23 @@ make -C doc install DESTDIR=%{buildroot}
 %files bin
 %defattr(-,root,root,-)
 /usr/bin/nft
+
+%files data
+%defattr(-,root,root,-)
+/usr/share/nftables/all-in-one.nft
+/usr/share/nftables/arp-filter.nft
+/usr/share/nftables/bridge-filter.nft
+/usr/share/nftables/inet-filter.nft
+/usr/share/nftables/inet-nat.nft
+/usr/share/nftables/ipv4-filter.nft
+/usr/share/nftables/ipv4-mangle.nft
+/usr/share/nftables/ipv4-nat.nft
+/usr/share/nftables/ipv4-raw.nft
+/usr/share/nftables/ipv6-filter.nft
+/usr/share/nftables/ipv6-mangle.nft
+/usr/share/nftables/ipv6-nat.nft
+/usr/share/nftables/ipv6-raw.nft
+/usr/share/nftables/netdev-ingress.nft
 
 %files dev
 %defattr(-,root,root,-)
