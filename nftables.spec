@@ -5,11 +5,11 @@
 # Source0 file verified with key 0xD55D978A8A1420E4 (coreteam@netfilter.org)
 #
 Name     : nftables
-Version  : 0.9.9
-Release  : 42
-URL      : https://www.netfilter.org/pub/nftables/nftables-0.9.9.tar.bz2
-Source0  : https://www.netfilter.org/pub/nftables/nftables-0.9.9.tar.bz2
-Source1  : https://www.netfilter.org/pub/nftables/nftables-0.9.9.tar.bz2.sig
+Version  : 1.0.0
+Release  : 43
+URL      : https://www.netfilter.org/pub/nftables/nftables-1.0.0.tar.bz2
+Source0  : https://www.netfilter.org/pub/nftables/nftables-1.0.0.tar.bz2
+Source1  : https://www.netfilter.org/pub/nftables/nftables-1.0.0.tar.bz2.sig
 Summary  : Netfilter nf_tables user library
 Group    : Development/Tools
 License  : GPL-2.0
@@ -122,23 +122,23 @@ python3 components for the nftables package.
 
 
 %prep
-%setup -q -n nftables-0.9.9
-cd %{_builddir}/nftables-0.9.9
+%setup -q -n nftables-1.0.0
+cd %{_builddir}/nftables-1.0.0
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1621987129
+export SOURCE_DATE_EPOCH=1629406096
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
-export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
+export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=auto "
+export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=auto "
+export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=auto "
+export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=auto "
 %configure --disable-static --with-xtables \
 --with-json
 make  %{?_smp_mflags}
@@ -151,10 +151,10 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1621987129
+export SOURCE_DATE_EPOCH=1629406096
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/nftables
-cp %{_builddir}/nftables-0.9.9/COPYING %{buildroot}/usr/share/package-licenses/nftables/18fa48a7ed581b147776213368ae1aafd82509c2
+cp %{_builddir}/nftables-1.0.0/COPYING %{buildroot}/usr/share/package-licenses/nftables/18fa48a7ed581b147776213368ae1aafd82509c2
 %make_install
 ## install_append content
 make -C doc install DESTDIR=%{buildroot}
@@ -198,7 +198,7 @@ make -C doc install DESTDIR=%{buildroot}
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/libnftables.so.1
-/usr/lib64/libnftables.so.1.0.0
+/usr/lib64/libnftables.so.1.1.0
 
 %files license
 %defattr(0644,root,root,0755)

@@ -1,7 +1,9 @@
 libnftables.so.1:nft_ctx_add_include_path
+libnftables.so.1:nft_ctx_add_var
 libnftables.so.1:nft_ctx_buffer_error
 libnftables.so.1:nft_ctx_buffer_output
 libnftables.so.1:nft_ctx_clear_include_paths
+libnftables.so.1:nft_ctx_clear_vars
 libnftables.so.1:nft_ctx_free
 libnftables.so.1:nft_ctx_get_dry_run
 libnftables.so.1:nft_ctx_get_error_buffer
