@@ -6,7 +6,7 @@
 #
 Name     : nftables
 Version  : 1.0.0
-Release  : 46
+Release  : 47
 URL      : https://www.netfilter.org/pub/nftables/nftables-1.0.0.tar.bz2
 Source0  : https://www.netfilter.org/pub/nftables/nftables-1.0.0.tar.bz2
 Source1  : https://www.netfilter.org/pub/nftables/nftables-1.0.0.tar.bz2.sig
@@ -130,7 +130,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1629406096
+export SOURCE_DATE_EPOCH=1635775871
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -151,7 +151,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1629406096
+export SOURCE_DATE_EPOCH=1635775871
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/nftables
 cp %{_builddir}/nftables-1.0.0/COPYING %{buildroot}/usr/share/package-licenses/nftables/18fa48a7ed581b147776213368ae1aafd82509c2
