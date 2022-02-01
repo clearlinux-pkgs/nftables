@@ -1,2 +1,3 @@
 --with-xtables
 --with-json
+--with-cli=readline

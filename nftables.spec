@@ -5,11 +5,11 @@
 # Source0 file verified with key 0xD55D978A8A1420E4 (coreteam@netfilter.org)
 #
 Name     : nftables
-Version  : 1.0.0
-Release  : 47
-URL      : https://www.netfilter.org/pub/nftables/nftables-1.0.0.tar.bz2
-Source0  : https://www.netfilter.org/pub/nftables/nftables-1.0.0.tar.bz2
-Source1  : https://www.netfilter.org/pub/nftables/nftables-1.0.0.tar.bz2.sig
+Version  : 1.0.1
+Release  : 48
+URL      : https://www.netfilter.org/pub/nftables/nftables-1.0.1.tar.bz2
+Source0  : https://www.netfilter.org/pub/nftables/nftables-1.0.1.tar.bz2
+Source1  : https://www.netfilter.org/pub/nftables/nftables-1.0.1.tar.bz2.sig
 Summary  : Netfilter nf_tables user library
 Group    : Development/Tools
 License  : GPL-2.0
@@ -122,15 +122,15 @@ python3 components for the nftables package.
 
 
 %prep
-%setup -q -n nftables-1.0.0
-cd %{_builddir}/nftables-1.0.0
+%setup -q -n nftables-1.0.1
+cd %{_builddir}/nftables-1.0.1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1635775871
+export SOURCE_DATE_EPOCH=1643756667
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -140,7 +140,8 @@ export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=auto "
 export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=auto "
 export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=auto "
 %configure --disable-static --with-xtables \
---with-json
+--with-json \
+--with-cli=readline
 make  %{?_smp_mflags}
 
 %check
@@ -151,10 +152,10 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1635775871
+export SOURCE_DATE_EPOCH=1643756667
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/nftables
-cp %{_builddir}/nftables-1.0.0/COPYING %{buildroot}/usr/share/package-licenses/nftables/18fa48a7ed581b147776213368ae1aafd82509c2
+cp %{_builddir}/nftables-1.0.1/COPYING %{buildroot}/usr/share/package-licenses/nftables/18fa48a7ed581b147776213368ae1aafd82509c2
 %make_install
 ## install_append content
 make -C doc install DESTDIR=%{buildroot}
