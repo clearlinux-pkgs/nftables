@@ -7,6 +7,7 @@ libnftables.so.1:nft_ctx_clear_vars
 libnftables.so.1:nft_ctx_free
 libnftables.so.1:nft_ctx_get_dry_run
 libnftables.so.1:nft_ctx_get_error_buffer
+libnftables.so.1:nft_ctx_get_optimize
 libnftables.so.1:nft_ctx_get_output_buffer
 libnftables.so.1:nft_ctx_new
 libnftables.so.1:nft_ctx_output_get_debug
@@ -15,6 +16,7 @@ libnftables.so.1:nft_ctx_output_set_debug
 libnftables.so.1:nft_ctx_output_set_flags
 libnftables.so.1:nft_ctx_set_dry_run
 libnftables.so.1:nft_ctx_set_error
+libnftables.so.1:nft_ctx_set_optimize
 libnftables.so.1:nft_ctx_set_output
 libnftables.so.1:nft_ctx_unbuffer_error
 libnftables.so.1:nft_ctx_unbuffer_output

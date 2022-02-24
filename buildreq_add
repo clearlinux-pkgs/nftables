@@ -8,3 +8,4 @@ gmp-dev
 jansson-dev
 ncurses-dev
 readline-dev
+nftables-dev
