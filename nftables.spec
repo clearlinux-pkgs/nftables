@@ -6,7 +6,7 @@
 #
 Name     : nftables
 Version  : 1.0.4
-Release  : 51
+Release  : 52
 URL      : https://www.netfilter.org/pub/nftables/nftables-1.0.4.tar.bz2
 Source0  : https://www.netfilter.org/pub/nftables/nftables-1.0.4.tar.bz2
 Source1  : https://www.netfilter.org/pub/nftables/nftables-1.0.4.tar.bz2.sig
@@ -131,7 +131,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1654699086
+export SOURCE_DATE_EPOCH=1656401255
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -153,13 +153,14 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1654699086
+export SOURCE_DATE_EPOCH=1656401255
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/nftables
 cp %{_builddir}/nftables-1.0.4/COPYING %{buildroot}/usr/share/package-licenses/nftables/18fa48a7ed581b147776213368ae1aafd82509c2
 %make_install
 ## install_append content
 make -C doc install DESTDIR=%{buildroot}
+mv %{buildroot}/usr/lib/python3.10/site-packages/nftables-0.*-py3.10.egg/nftables %{buildroot}/usr/lib/python3.10/site-packages/
 ## install_append end
 
 %files
