@@ -1,5 +1,5 @@
 PKG_NAME := nftables
-URL = https://www.netfilter.org/pub/nftables/nftables-1.0.5.tar.bz2
+URL = https://www.netfilter.org/pub/nftables/nftables-1.0.6.tar.xz
 ARCHIVES = 
 
 include ../common/Makefile.common
