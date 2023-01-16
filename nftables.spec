@@ -6,7 +6,7 @@
 #
 Name     : nftables
 Version  : 1.0.6
-Release  : 63
+Release  : 64
 URL      : https://www.netfilter.org/pub/nftables/nftables-1.0.6.tar.xz
 Source0  : https://www.netfilter.org/pub/nftables/nftables-1.0.6.tar.xz
 Source1  : https://www.netfilter.org/pub/nftables/nftables-1.0.6.tar.xz.sig
@@ -37,6 +37,7 @@ BuildRequires : sed
 # Suppress stripping binaries
 %define __strip /bin/true
 %define debug_package %{nil}
+Patch1: backport-crashfix.patch
 
 %description
 No detailed description available
@@ -128,13 +129,14 @@ python3 components for the nftables package.
 %prep
 %setup -q -n nftables-1.0.6
 cd %{_builddir}/nftables-1.0.6
+%patch1 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1672757099
+export SOURCE_DATE_EPOCH=1673884811
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -156,7 +158,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1672757099
+export SOURCE_DATE_EPOCH=1673884811
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/nftables
 cp %{_builddir}/nftables-%{version}/COPYING %{buildroot}/usr/share/package-licenses/nftables/18fa48a7ed581b147776213368ae1aafd82509c2 || :

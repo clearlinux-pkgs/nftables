@@ -1,0 +1,68 @@
+From ce04d25b4a116ef04f27d0b71994f61a24114d6d Mon Sep 17 00:00:00 2001
+From: Pablo Neira Ayuso <pablo@netfilter.org>
+Date: Thu, 12 Jan 2023 21:46:41 +0100
+Subject: intervals: restrict check missing elements fix to sets with no
+ auto-merge
+
+If auto-merge is enabled, skip check for element mismatch introduced by
+6d1ee9267e7e ("intervals: check for EXPR_F_REMOVE in case of element
+mismatch"), which is only relevant to sets with no auto-merge.
+
+The interval adjustment routine for auto-merge already checks for
+unexisting intervals in that case.
+
+Uncovered via ASAN:
+
+==11946==ERROR: AddressSanitizer: heap-use-after-free on address
+0x60d00000021c at pc 0x559ae160d5b3 bp 0x7ffc37bcb800 sp 0x7ffc37bcb7f8
+READ of size 4 at 0x60d00000021c thread T0
+    #0 0x559ae160d5b2 in 0? /builddir/build/BUILD/nftables-1.0.6/src/intervals.c:424
+    #1 0x559ae15cb05a in interval_set_eval.lto_priv.0 (/usr/lib64/libnftables.so.1+0xaf05a)
+    #2 0x559ae15e1c0d in setelem_evaluate.lto_priv.0 (/usr/lib64/libnftables.so.1+0xc5c0d)
+    #3 0x559ae166b715 in nft_evaluate (/usr/lib64/libnftables.so.1+0x14f715)
+    #4 0x559ae16749b4 in nft_run_cmd_from_buffer (/usr/lib64/libnftables.so.1+0x1589b4)
+    #5 0x559ae20c0e7e in main (/usr/bin/nft+0x8e7e)
+    #6 0x559ae1341146 in __libc_start_call_main ../sysdeps/nptl/libc_start_call_main.h:58
+    #7 0x559ae1341204 in __libc_start_main_impl ../csu/libc-start.c:381
+    #8 0x559ae20c1420 in _start ../sysdeps/x86_64/start.S:115
+
+0x60d00000021c is located 60 bytes inside of 144-byte region [0x60d0000001e0,0x60d000000270) freed by thread T0 here:
+    #0 0x559ae18ea618 in __interceptor_free ../../../../gcc-12.2.0/libsanitizer/asan/asan_malloc_linux.cpp:52
+    #1 0x559ae160c315 in 4 /builddir/build/BUILD/nftables-1.0.6/src/intervals.c:349
+    #2 0x559ae160c315 in 0? /builddir/build/BUILD/nftables-1.0.6/src/intervals.c:420
+
+previously allocated by thread T0 here:
+    #0 0x559ae18eb927 in __interceptor_calloc ../../../../gcc-12.2.0/libsanitizer/asan/asan_malloc_linux.cpp:77
+    #1 0x559ae15c5076 in set_elem_expr_alloc (/usr/lib64/libnftables.so.1+0xa9076)
+
+Fixes: 6d1ee9267e7e ("intervals: check for EXPR_F_REMOVE in case of element mismatch")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+---
+ src/intervals.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
+
+diff --git a/src/intervals.c b/src/intervals.c
+index 13009ca1..95e25cf0 100644
+--- a/src/intervals.c
++++ b/src/intervals.c
+@@ -416,11 +416,12 @@ static int setelem_delete(struct list_head *msgs, struct set *set,
+ 				list_del(&i->list);
+ 				expr_free(i);
+ 			}
+-		} else if (set->automerge &&
+-			   setelem_adjust(set, purge, &prev_range, &range, prev, i) < 0) {
+-			expr_error(msgs, i, "element does not exist");
+-			err = -1;
+-			goto err;
++		} else if (set->automerge) {
++			if (setelem_adjust(set, purge, &prev_range, &range, prev, i) < 0) {
++				expr_error(msgs, i, "element does not exist");
++				err = -1;
++				goto err;
++			}
+ 		} else if (i->flags & EXPR_F_REMOVE) {
+ 			expr_error(msgs, i, "element does not exist");
+ 			err = -1;
+-- 
+cgit v1.2.3
+
