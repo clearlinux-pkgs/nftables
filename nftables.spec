@@ -5,11 +5,11 @@
 # Source0 file verified with key 0xD55D978A8A1420E4 (coreteam@netfilter.org)
 #
 Name     : nftables
-Version  : 1.0.6
-Release  : 64
-URL      : https://www.netfilter.org/pub/nftables/nftables-1.0.6.tar.xz
-Source0  : https://www.netfilter.org/pub/nftables/nftables-1.0.6.tar.xz
-Source1  : https://www.netfilter.org/pub/nftables/nftables-1.0.6.tar.xz.sig
+Version  : 1.0.7
+Release  : 65
+URL      : https://www.netfilter.org/pub/nftables/nftables-1.0.7.tar.xz
+Source0  : https://www.netfilter.org/pub/nftables/nftables-1.0.7.tar.xz
+Source1  : https://www.netfilter.org/pub/nftables/nftables-1.0.7.tar.xz.sig
 Summary  : Netfilter nf_tables user library
 Group    : Development/Tools
 License  : GPL-2.0
@@ -37,7 +37,6 @@ BuildRequires : sed
 # Suppress stripping binaries
 %define __strip /bin/true
 %define debug_package %{nil}
-Patch1: backport-crashfix.patch
 
 %description
 No detailed description available
@@ -127,16 +126,15 @@ python3 components for the nftables package.
 
 
 %prep
-%setup -q -n nftables-1.0.6
-cd %{_builddir}/nftables-1.0.6
-%patch1 -p1
+%setup -q -n nftables-1.0.7
+cd %{_builddir}/nftables-1.0.7
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1673884811
+export SOURCE_DATE_EPOCH=1678803561
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -158,10 +156,10 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1673884811
+export SOURCE_DATE_EPOCH=1678803561
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/nftables
-cp %{_builddir}/nftables-%{version}/COPYING %{buildroot}/usr/share/package-licenses/nftables/18fa48a7ed581b147776213368ae1aafd82509c2 || :
+cp %{_builddir}/nftables-%{version}/COPYING %{buildroot}/usr/share/package-licenses/nftables/9b67937f4425456d36b29592838750ff8f0dceb3 || :
 %make_install
 ## install_append content
 make -C doc install DESTDIR=%{buildroot}
@@ -210,7 +208,7 @@ mv %{buildroot}/usr/lib/python3.11/site-packages/nftables-0.*-py3.11.egg/nftable
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/nftables/18fa48a7ed581b147776213368ae1aafd82509c2
+/usr/share/package-licenses/nftables/9b67937f4425456d36b29592838750ff8f0dceb3
 
 %files man
 %defattr(0644,root,root,0755)
