@@ -1,2 +1,2 @@
 make -C doc install DESTDIR=%{buildroot}
-mv %{buildroot}/usr/lib/python3.11/site-packages/nftables-0.*-py3.11.egg/nftables %{buildroot}/usr/lib/python3.11/site-packages/
+mv %{buildroot}/usr/lib/python3.12/site-packages/nftables-0.*-py3.12.egg/nftables %{buildroot}/usr/lib/python3.12/site-packages/
