@@ -1,0 +1,6 @@
+/etc/:
+/etc/nftables/osf:
+/etc/nftables:
+nftables
+osf
+pf.os
